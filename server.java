@@ -1,7 +1,7 @@
 import java.io.*; 
 import java.net.*; 
   
-class UDPServer { 
+class server { 
   public static void main(String args[]) throws Exception 
     { 
   
