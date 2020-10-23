@@ -12,26 +12,27 @@ class server {
 
     while(true) 
     { 
+      DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length); 
+      serverSocket.receive(receivePacket); 
 
-      DatagramPacket receivePacket = 
-          new DatagramPacket(receiveData, receiveData.length); 
-        serverSocket.receive(receivePacket); 
+      String sentence = new String(receivePacket.getData()); 
 
-        String sentence = new String(receivePacket.getData()); 
+      InetAddress IPAddress = receivePacket.getAddress(); 
 
-        InetAddress IPAddress = receivePacket.getAddress(); 
+      int port = receivePacket.getPort(); 
 
-        int port = receivePacket.getPort(); 
+      String capitalizedSentence = sentence.toUpperCase(); 
 
-                    String capitalizedSentence = sentence.toUpperCase(); 
+      sendData = capitalizedSentence.getBytes(); 
 
-        sendData = capitalizedSentence.getBytes(); 
+      DatagramPacket sendPacket = new DatagramPacket(
+        sendData, 
+        sendData.length, 
+        IPAddress, 
+        port
+      ); 
 
-        DatagramPacket sendPacket = 
-          new DatagramPacket(sendData, sendData.length, IPAddress, 
-                            port); 
-
-        serverSocket.send(sendPacket); 
+      serverSocket.send(sendPacket); 
     } 
   } 
 }  
