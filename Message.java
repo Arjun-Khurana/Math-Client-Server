@@ -1,8 +1,5 @@
-package common;
-
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
-
 /**
  * Message
  * A class that represents the message that is sent between client and server
