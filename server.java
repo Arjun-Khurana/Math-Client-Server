@@ -1,13 +1,9 @@
 import java.net.*;
-// import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.joda.time.format.PeriodFormat;
-import org.joda.time.format.PeriodFormatter;
-import org.joda.time.Duration;
-
+import org.nfunk.jep.*;
+import org.mariuszgromada.math.mxparser.*;
   
 class server { 
 
@@ -39,16 +35,19 @@ class server {
 
         // send ack back to client
       }
-      // Remove the client from the list
+      
       else if(message.getType().equals("logout")) {
         Instant second = Instant.now();
-        long difference = second.toEpochMilli() - first.toEpochMilli();
-        Duration duration = new Duration(difference);
-        PeriodFormatter formatter = PeriodFormat.getDefault();
-        String formatted = formatter.print(duration.toPeriod());
+        Connection current = null;
+        for (Connection c : connections) {
+          if (c.getUsername().equals(message.getUser())) {
+            current = c;
+            c.setEnd(second);
+          }
+        }
+        
+        String formatted = current.getFormattedTime();
         System.out.println(message.getJSONString() + formatted);
-        connections.remove(message.getUser());
-        System.out.println(connections.toString());
       }
 
       else {
