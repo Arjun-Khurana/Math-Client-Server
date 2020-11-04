@@ -1,5 +1,6 @@
 import java.io.*; 
 import java.net.*;
+import java.util.Random;
   
 class client {
 
@@ -57,5 +58,48 @@ class client {
 
     System.out.println("FROM SERVER:" + modifiedSentence); 
     clientSocket.close(); 
-        }
+
+  }
+
+  private static String generateExpression() {
+    Random r = new Random();
+    String exp = "E";
+    // exp = exp.replaceFirst("(?:E)+", "I");
+    // System.out.println(exp);
+    int depth = 0;
+    while (exp.contains("E")) {
+      if (++depth == 5) {
+        exp = exp.replaceAll("E", "I");
+        break;
+      }
+      int x = r.nextInt(6);
+
+      switch(x) {
+        case 0:
+            exp = exp.replaceFirst("(?:E)+", "I");
+            break;
+        case 1:
+            exp = exp.replaceFirst("(?:E)+", "(E+E)");
+            break;
+        case 2:
+            exp = exp.replaceFirst("(?:E)+", "(E*E)");
+            break;
+        case 3:
+            exp = exp.replaceFirst("(?:E)+", "(E-E)");
+            break;
+        case 4:
+            exp = exp.replaceFirst("(?:E)+", "(E/E)");
+            break;
+        case 5:
+            exp = exp.replaceFirst("(?:E)+", "(E^E)");
+      }
     }
+
+    while(exp.contains("I")) {
+      exp = exp.replaceFirst("(?:I)+", Integer.toString(1 + r.nextInt(9)));
+    }
+
+    return exp;
+  }
+
+}
