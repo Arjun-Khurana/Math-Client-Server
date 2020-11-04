@@ -3,7 +3,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import org.nfunk.jep.*;
-import org.mariuszgromada.math.mxparser.*;
   
 class server { 
 
@@ -25,7 +24,7 @@ class server {
 
       Message message = new Message(new String(receivePacket.getData(), 0, receivePacket.getLength()));
 
-      // Add the client to the list
+      // Login: Add the client to the list
       if(message.getType().equals("login")) {
         System.out.println(message.getJSONString());
         first = Instant.now();
@@ -36,6 +35,7 @@ class server {
         // send ack back to client
       }
       
+      // Logout
       else if(message.getType().equals("logout")) {
         Instant second = Instant.now();
         Connection current = null;
@@ -50,15 +50,21 @@ class server {
         System.out.println(message.getJSONString() + formatted);
       }
 
+      // Math request
       else {
 
         InetAddress IPAddress = receivePacket.getAddress();
 
         int port = receivePacket.getPort();
 
-        String capitalizedSentence = message.getMessage().toUpperCase();
+        System.out.println(message.getJSONString());
 
-        sendData = capitalizedSentence.getBytes();
+        String expression = message.getMessage();
+
+        JEP jep = new JEP();
+        jep.parseExpression(expression);
+        Double result = jep.getValue();
+        sendData = result.toString().getBytes();
 
         DatagramPacket sendPacket = new DatagramPacket(
           sendData,
