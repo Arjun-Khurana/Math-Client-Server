@@ -44,7 +44,8 @@ class client {
         sendMessage(message, clientSocket);
       }
     }
-    Message message = new Message("message", username, sentence);
+    // Math request
+    Message message = new Message("math request", username, sentence);
     sendMessage(message, clientSocket);
     
     // Receive response from server
