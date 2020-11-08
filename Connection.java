@@ -1,3 +1,4 @@
+import java.net.InetAddress;
 import java.time.Instant;
 import org.joda.time.format.PeriodFormat;
 import org.joda.time.format.PeriodFormatter;
@@ -7,6 +8,8 @@ public class Connection {
     private String username;
     private Instant start;
     private Instant end;
+    private InetAddress IPAddress;
+    private int port;
 
     public Connection(String username, Instant start) {
         this.username = username;

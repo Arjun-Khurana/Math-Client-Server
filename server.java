@@ -1,31 +1,35 @@
 import java.net.*;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+
+import org.joda.time.LocalDateTime;
 import org.nfunk.jep.*;
   
 class server { 
 
   private static List<Connection> connections;
+  private static Queue<Request> requests = new LinkedList<>();
 
   public static void main(String args[]) throws Exception {
 
     DatagramSocket serverSocket = new DatagramSocket(9876);
     connections = new ArrayList<>();
 
-    byte[] receiveData = new byte[1024]; 
-    byte[] sendData  = new byte[1024]; 
+    byte[] receiveData = new byte[1024];
+    byte[] sendData = new byte[1024];
     Instant first = null;
 
-    while(true) 
-    { 
-      DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length); 
+    while (true) {
+      DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
       serverSocket.receive(receivePacket);
 
       Message message = new Message(new String(receivePacket.getData(), 0, receivePacket.getLength()));
 
       // Login: Add the client to the list
-      if(message.getType().equals("login")) {
+      if (message.getType().equals("login")) {
         System.out.println(message.getJSONString());
         first = Instant.now();
         Connection c = new Connection(message.getUser(), first);
@@ -34,9 +38,9 @@ class server {
 
         // send ack back to client
       }
-      
+
       // Logout
-      else if(message.getType().equals("logout")) {
+      else if (message.getType().equals("logout")) {
         Instant second = Instant.now();
         Connection current = null;
         for (Connection c : connections) {
@@ -45,7 +49,7 @@ class server {
             c.setEnd(second);
           }
         }
-        
+
         String formatted = current.getFormattedTime();
         System.out.println(message.getJSONString() + formatted);
       }
@@ -60,6 +64,17 @@ class server {
         System.out.println(message.getJSONString());
 
         String expression = message.getMessage();
+
+        // Find the connection from the list
+        Connection current = null;
+        for (Connection c : connections) {
+          if (c.getUsername().equals(message.getUser())) {
+            current = c;
+          }
+        }
+
+        Request request = new Request(current, expression, LocalDateTime.now());
+        requests.add(request);
 
         JEP jep = new JEP();
         jep.parseExpression(expression);
