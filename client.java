@@ -1,6 +1,7 @@
 import java.io.*; 
 import java.net.*;
 import java.util.Random;
+import java.util.Scanner;
   
 class client {
 
@@ -12,7 +13,11 @@ class client {
   }
 
   public static void main(String args[]) throws Exception {
+    
+    Scanner s = new Scanner(System.in);
 
+    System.out.println("Welcome to Math Client Server");
+    
     BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
     DatagramSocket clientSocket = new DatagramSocket();
     boolean ackReceived = false;
@@ -27,46 +32,77 @@ class client {
     Message loginMessage = new Message("login", username);
     sendMessage(loginMessage, clientSocket);
 
+    DatagramPacket ack = new DatagramPacket(receiveData, receiveData.length); 
+  
+    clientSocket.receive(ack); 
+
+    String ackResponse = new String(ack.getData()); 
+
+    System.out.println("FROM SERVER:" + ackResponse);
+
     //wait for ack
 
-    String sentence = inFromUser.readLine(); 
-    if (sentence.length() == 0) {
-      System.out.print("Would you like to log out? (y/N): ");
-      String answer = inFromUser.readLine();
-      if(answer.equals("y")) {
-        Message message = new Message("logout", username);
-        sendMessage(message, clientSocket);
-        return;
-        // stop socket and thread
-      }
-      else {
-        Message message = new Message("message", username, sentence);
-        sendMessage(message, clientSocket);
-      }
-    }
-    // Math request
-    Message message = new Message("math request", username, sentence);
-    sendMessage(message, clientSocket);
+    // int x = -1;
+    // boolean userInput = false;
+
+    // while (x != 1 && x != 2) {
+    //   System.out.println("Enter 1 for user input mode, or 2 for automatic mode");
+    //   x = s.nextInt();
+    //   System.out.println(x);
+  
+    //   if (x == 1) {
+    //     userInput = true;
+    //   } else if (x == 2) {
+    //     userInput = false;
+    //   } else {
+    //     System.out.println("Invalid choice.");
+    //   }
+    // }
     
-    // Receive response from server
-    DatagramPacket receivePacket = 
-        new DatagramPacket(receiveData, receiveData.length); 
-
-    clientSocket.receive(receivePacket); 
-
-    String modifiedSentence = 
-        new String(receivePacket.getData()); 
-
-    System.out.println("FROM SERVER:" + modifiedSentence); 
+    // String sentence = inFromUser.readLine(); 
+    // if (sentence.length() == 0) {
+    //   System.out.print("Would you like to log out? (y/N): ");
+    //   String answer = inFromUser.readLine();
+    //   if(answer.equals("y")) {
+    //     Message message = new Message("logout", username);
+    //     sendMessage(message, clientSocket);
+    //     s.close();
+    //     return;
+    //     // stop socket and thread
+    //   }
+    //   else {
+    //     Message message = new Message("message", username, sentence);
+    //     sendMessage(message, clientSocket);
+    //   }
+    // }
+    // Math request
+    for (int i = 0; i < 3; i++) {
+      String sentence = generateExpression();
+      Message message = new Message("math request", username, sentence);
+      sendMessage(message, clientSocket);
+      
+      // Receive response from server
+      DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length); 
+  
+      clientSocket.receive(receivePacket); 
+  
+      String response = new String(receivePacket.getData()); 
+  
+      System.out.println("FROM SERVER:" + response); 
+    }
+    
     clientSocket.close(); 
+    s.close();
 
   }
 
+  // private static Message userExpression(String username) {
+
+  // }
+
   private static String generateExpression() {
     Random r = new Random();
-    String exp = "E";
-    // exp = exp.replaceFirst("(?:E)+", "I");
-    // System.out.println(exp);
+    String exp = "E+E";
     int depth = 0;
     while (exp.contains("E")) {
       if (++depth == 5) {
