@@ -8,8 +8,6 @@ public class Connection {
     private String username;
     private Instant start;
     private Instant end;
-    private InetAddress IPAddress;
-    private int port;
 
     public Connection(String username, Instant start) {
         this.username = username;

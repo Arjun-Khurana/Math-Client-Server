@@ -6,13 +6,11 @@ import java.util.List;
 import java.util.Queue;
 
 import org.joda.time.LocalDateTime;
-import org.nfunk.jep.*;
   
 class server { 
 
   private static List<Connection> connections;
   private static Queue<Request> requests = new LinkedList<>();
-
   public static void main(String args[]) throws Exception {
 
     DatagramSocket serverSocket = new DatagramSocket(9876);
@@ -37,6 +35,9 @@ class server {
         System.out.println(connections.toString());
 
         // send ack back to client
+        Message ack = new Message("ack", c.getUsername(), "Welcome " + c.getUsername());
+        sendData = message.getJSONString().getBytes();
+        serverSocket.send(new DatagramPacket(sendData, sendData.length, receivePacket.getAddress(), receivePacket.getPort()));
       }
 
       // Logout
@@ -54,13 +55,8 @@ class server {
         System.out.println(message.getJSONString() + formatted);
       }
 
-      // Math request
+      // Handle Math request and add to queue
       else {
-
-        InetAddress IPAddress = receivePacket.getAddress();
-
-        int port = receivePacket.getPort();
-
         System.out.println(message.getJSONString());
 
         String expression = message.getMessage();
@@ -73,13 +69,16 @@ class server {
           }
         }
 
-        Request request = new Request(current, expression, LocalDateTime.now());
-        requests.add(request);
-
-        JEP jep = new JEP();
-        jep.parseExpression(expression);
-        Double result = jep.getValue();
-        sendData = result.toString().getBytes();
+        Request request = new Request(current, expression, Instant.now(), receivePacket);
+        request.run();
+        requests.add(request);     
+      }
+      // Check if next math request from queue is complete and send response back
+      if (!requests.isEmpty() && requests.peek().getDone()) {
+        Request request = requests.remove();
+        sendData = request.getResult().toString().getBytes();
+        InetAddress IPAddress = request.getReceivePacket().getAddress();
+        int port = request.getReceivePacket().getPort();
 
         DatagramPacket sendPacket = new DatagramPacket(
           sendData,
@@ -88,9 +87,8 @@ class server {
           port
         );
 
-        serverSocket.send(sendPacket);
+        serverSocket.send(sendPacket);   
       }
-
     }
   } 
 }  
