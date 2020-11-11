@@ -2,6 +2,7 @@ import java.io.*;
 import java.net.*;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Arrays;
   
 class client {
 
@@ -39,58 +40,69 @@ class client {
     String ackResponse = new String(ack.getData()); 
 
     System.out.println("FROM SERVER:" + ackResponse);
+    receiveData = new byte[1024];
 
     //wait for ack
 
-    // int x = -1;
-    // boolean userInput = false;
+    int x = -1;
+    boolean userInput = false;
 
-    // while (x != 1 && x != 2) {
-    //   System.out.println("Enter 1 for user input mode, or 2 for automatic mode");
-    //   x = s.nextInt();
-    //   System.out.println(x);
+    while (x != 1 && x != 2) {
+      System.out.println("Enter 1 for user input mode, or 2 for automatic mode");
+      x = s.nextInt();
+      System.out.println(x);
   
-    //   if (x == 1) {
-    //     userInput = true;
-    //   } else if (x == 2) {
-    //     userInput = false;
-    //   } else {
-    //     System.out.println("Invalid choice.");
-    //   }
-    // }
-    
-    // String sentence = inFromUser.readLine(); 
-    // if (sentence.length() == 0) {
-    //   System.out.print("Would you like to log out? (y/N): ");
-    //   String answer = inFromUser.readLine();
-    //   if(answer.equals("y")) {
-    //     Message message = new Message("logout", username);
-    //     sendMessage(message, clientSocket);
-    //     s.close();
-    //     return;
-    //     // stop socket and thread
-    //   }
-    //   else {
-    //     Message message = new Message("message", username, sentence);
-    //     sendMessage(message, clientSocket);
-    //   }
-    // }
-    // Math request
+      if (x == 1) {
+        userInput = true;
+      } else if (x == 2) {
+        userInput = false;
+      } else {
+        System.out.println("Invalid choice.");
+      }
+    }
+
     for (int i = 0; i < 3; i++) {
-      String sentence = generateExpression();
+      String sentence;
+      if (userInput) {
+        System.out.print("Enter an expression: ");
+        sentence = inFromUser.readLine(); 
+        if (sentence.length() == 0) {
+          System.out.print("Would you like to log out? (y/n): ");
+          String answer = inFromUser.readLine();
+          if(answer.equals("y")) {
+            Message message = new Message("logout", username);
+            sendMessage(message, clientSocket);
+            s.close();
+            return;
+            // stop socket and thread
+          }
+          else {
+            Message message = new Message("message", username, sentence);
+            sendMessage(message, clientSocket);
+          }
+        }
+      } else {
+        sentence = generateExpression();
+      }
+
+      //Send message to server
       Message message = new Message("math request", username, sentence);
       sendMessage(message, clientSocket);
-      
+
       // Receive response from server
       DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length); 
-  
+    
       clientSocket.receive(receivePacket); 
   
       String response = new String(receivePacket.getData()); 
   
       System.out.println("FROM SERVER:" + response); 
+      receiveData = new byte[1024];
       Thread.sleep(3000);
     }
+
+    
+    // Math request
     
     clientSocket.close(); 
     s.close();
