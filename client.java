@@ -2,7 +2,6 @@ import java.io.*;
 import java.net.*;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Arrays;
   
 class client {
 
@@ -101,9 +100,8 @@ class client {
       Thread.sleep(3000);
     }
 
-    
-    // Math request
-    
+    Message message = new Message("logout", username);
+    sendMessage(message, clientSocket);
     clientSocket.close(); 
     s.close();
 
