@@ -89,6 +89,7 @@ class client {
       String response = new String(receivePacket.getData()); 
   
       System.out.println("FROM SERVER:" + response); 
+      Thread.sleep(3000);
     }
     
     clientSocket.close(); 
