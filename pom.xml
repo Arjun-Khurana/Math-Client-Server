@@ -1,0 +1,73 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.mycompany.app</groupId>
+  <artifactId>myapp</artifactId>
+  <packaging>jar</packaging>
+  <version>0.1.0</version>
+  <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.4</version>
+        <executions>
+            <execution>
+              <id>build-first</id>
+              <phase>package</phase>
+              <goals>
+                  <goal>shade</goal>
+              </goals>
+              <configuration>
+                  <transformers>
+                      <transformer
+                          implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                          <mainClass>myapp.src.main.java.mavenpackage.server</mainClass>
+                      </transformer>
+                  </transformers>
+                  <finalName>server-runnable</finalName>
+              </configuration>
+            </execution>
+            <execution>
+              <id>build-second</id>
+              <phase>package</phase>
+              <goals>
+                <goal>shade</goal>
+              </goals>   
+              <configuration>
+                <transformers>
+                  <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">                        
+                    <mainClass>myapp.src.main.java.mavenpackage.client</mainClass>
+                  </transformer>
+                </transformers>
+                <finalName>client-runnable</finalName>
+              </configuration>  
+            </execution>
+          </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+      <version>2.10.8</version>
+    </dependency>
+    <dependency>
+      <groupId>com.googlecode.json-simple</groupId>
+      <artifactId>json-simple</artifactId>
+      <version>1.1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>jep</groupId>
+      <artifactId>jep</artifactId>
+      <version>2.24</version>
+    </dependency>
+  </dependencies>
+
+</project>

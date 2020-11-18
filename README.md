@@ -1,6 +1,13 @@
 # Math-Client-Server
 Project for CS4390 Computer Networks demonstrating client-server network architecture with math.
 
+How to run:
+mvn install
+mvn compile
+mvn package
+java -jar target/server-runnable.jar
+java -jar target/client-runnable.jar
+
 Group Members:
 Natasha Trayers nnt180002
 Arjun Khurana axk172230
