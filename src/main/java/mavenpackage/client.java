@@ -84,6 +84,7 @@ class client {
         }
       } else {
         sentence = generateExpression();
+        System.out.println(sentence);
       }
 
       //Send message to server
