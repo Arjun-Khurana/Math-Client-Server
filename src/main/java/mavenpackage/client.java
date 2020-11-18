@@ -70,7 +70,7 @@ class client {
     while (x != 1 && x != 2) {
       System.out.println("Enter 1 for user input mode, or 2 for automatic mode");
       x = s.nextInt();
-      System.out.println(x);
+      // System.out.println(x);
 
       if (x == 1) {
         userInput = true;
@@ -114,16 +114,17 @@ class client {
 
       String response = new String(receivePacket.getData());
 
-      System.out.println("FROM SERVER:" + response);
+      System.out.println("FROM SERVER: " + response);
       receiveData = new byte[1024];
-      Thread.sleep(3000);
+      Random r = new Random();
+      Thread.sleep((1 + r.nextInt(6))*1000);
     }
 
     Message message = new Message("logout", username);
     sendMessage(message, clientSocket);
     clientSocket.close();
     s.close();
-
+    System.out.println("Thank you! Exiting.")
   }
 
 

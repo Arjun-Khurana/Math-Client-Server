@@ -94,10 +94,11 @@ class client {
       clientSocket.receive(receivePacket); 
   
       String response = new String(receivePacket.getData()); 
-  
+      
+      Random r = new Random();
       System.out.println("FROM SERVER:" + response); 
       receiveData = new byte[1024];
-      Thread.sleep(3000);
+      Thread.sleep(r.nextInt(6) * 1000);
     }
 
     Message message = new Message("logout", username);
@@ -106,10 +107,6 @@ class client {
     s.close();
 
   }
-
-  // private static Message userExpression(String username) {
-
-  // }
 
   private static String generateExpression() {
     Random r = new Random();
