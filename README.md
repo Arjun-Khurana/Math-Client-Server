@@ -18,8 +18,8 @@ Natasha Trayers nnt180002
 Arjun Khurana axk172230
 Pallavi Vayalali  pxv170130
 
-Protocal Design:
-The protocal design for this project is a message formation for sending and recieving math calculations, message format for joining and terminating connection and format for keeping logs of client activities at server side
+Protocol Design:
+The protocol design for this project is a message formation for sending and recieving math calculations, message format for joining and terminating connection and format for keeping logs of client activities at server side
 
 Below is the pseudo out program is based on for both the server and the client:
 server:
