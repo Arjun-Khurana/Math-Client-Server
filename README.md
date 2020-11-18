@@ -2,8 +2,16 @@
 Project for CS4390 Computer Networks demonstrating client-server network architecture with math.
 
 How to run:
-mvn package
+
+./mvnw.cmd clean package
+
+To run server:
+
 java -jar target/server-runnable.jar
+
+To run client:
+
+
 java -jar target/client-runnable.jar
 
 User input mode will allow the client to send their own math requests three times
