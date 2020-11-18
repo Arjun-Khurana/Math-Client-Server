@@ -124,7 +124,7 @@ class client {
     sendMessage(message, clientSocket);
     clientSocket.close();
     s.close();
-    System.out.println("Thank you! Exiting.")
+    System.out.println("Thank you! Exiting.");
   }
 
 
