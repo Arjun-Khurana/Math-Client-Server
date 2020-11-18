@@ -1,24 +1,30 @@
 # Math-Client-Server
 Project for CS4390 Computer Networks demonstrating client-server network architecture with math.
 
-How to compile:  
+## **How to compile**  
+### On windows:  
 ./mvnw.cmd clean package
 
-To run server:  
+### On linux:  
+./mvnw clean package
+
+### To run server:  
 java -jar target/server-runnable.jar
 
-To run client:  
+### To run client:  
 java -jar target/client-runnable.jar
 
-User input mode will allow the client to send their own math requests three times
-Automatic mode will generate three math requests to be sent to the server
+### User input mode  
+allow the client to send their own math requests three times  
+### Automatic mode  
+will generate three math requests to be sent to the server
 
-Group Members:
+**Group Members:**  
 Natasha Trayers nnt180002
 Arjun Khurana axk172230
 Pallavi Vayalali  pxv170130
 
-Protocol Design:
+**Protocol Design:**
 The protocol design for this project is a message formation for sending and recieving math calculations, message format for joining and terminating connection and format for keeping logs of client activities at server side
 
 Below is the pseudo out program is based on for both the server and the client:
@@ -89,21 +95,30 @@ to be made in the program and and an easier method to transfer code between the 
 
 Compiling and Execution of Code:
 
-How to compile:  
+## **How to compile**  
+### On windows:  
 ./mvnw.cmd clean package
 
-To run server:  
+### On linux:  
+./mvnw clean package
+
+### To run server:  
 java -jar target/server-runnable.jar
 
-To run client:  
+### To run client:  
 java -jar target/client-runnable.jar
+
+### User input mode  
+allow the client to send their own math requests three times  
+### Automatic mode  
+will generate three math requests to be sent to the server
 
 Parameters For Code Execution:
 
-Challenges Faced:
+**Challenges Faced:**
 
 There were some difficulties that were faced during this project. For example, it was definitely an adjustment to work virtually for this project. This was primarily because a lot of this project had aspect that couldn't be coding separately, as one integral part of the code would be dependent on another part and coding them separately could lead to more bug fixes. Additionally, there were times when the code would only work on one partners computer and lead to run time errors on another computer due to package download errors. Additionally, another challenge for the group was finding time as a group to meet every week with all our different schedules with could lead to time constraints on the project schedule. But overall, many of the challenges that we faced as a team we found solutions to that worked best for us to complete the project. 
 
-What we have learned during this project:
+**What we have learned during this project:**
 
 During the course of this project we had a great opportunity to implement various aspects we have learned during lecture. For example, we got a better understanding of the client and server relationship and how a server can best understand what requests to complete first and how the process is efficiently completed.
