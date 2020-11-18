@@ -83,12 +83,14 @@ The programming environment that was used was called Visual Studio Code. In addi
 to be made in the program and and an easier method to transfer code between the group members.
 
 Compiling and Execution of Code:
-To compile and execute the code, the first step requires the user to run Server.java. 
-terminate the batch
-run server.java
+To compile and execute the code:
+mvn package
+java -jar target/server-runnable.jar
+java -jar target/client-runnable.jar
 
 Parameters For Code Execution:
 
 Challenges Faced:
 There were some difficulties that were faced during this project. For example, it was definitely an adjustement 
 
+What you have learned doing project: 
