@@ -1,0 +1,8 @@
+compile: 
+	mvnw.cmd clean package
+server:
+	java -jar target/server-runnable.jar
+client:
+	java -jar target/client-runnable.jar
+clean:
+	mvnw.cmd clean
