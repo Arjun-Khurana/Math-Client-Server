@@ -8,7 +8,7 @@ make -f makefileWindows compile
 ### To run server:  
 make -f makefileWindows server
 
-### To run client:  
+### To run client (in a new terminal):  
 make -f makefileWindows client
 
 ## On linux:  
@@ -17,7 +17,7 @@ make -f makefileUnix compile
 ### To run server:  
 make -f makefileUnix server
 
-### To run client:  
+### To run client (in a new terminal):  
 make -f makefileUnix client
 
 ## User input mode  
