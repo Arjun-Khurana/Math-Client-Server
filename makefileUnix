@@ -1,8 +1,8 @@
 compile: 
-	mvnw clean package
+	./mvnw clean package
 server:
 	java -jar target/server-runnable.jar
 client:
 	java -jar target/client-runnable.jar
 clean:
-	mvnw clean
+	./mvnw clean
