@@ -1,22 +1,28 @@
 # Math-Client-Server
 Project for CS4390 Computer Networks demonstrating client-server network architecture with math.
 
-## **How to compile**  
-### On windows:  
-./mvnw.cmd clean package
-
-### On linux:  
-./mvnw clean package
+## **How to compile and Run**  
+## On windows:  
+make -f makefileWindows compile
 
 ### To run server:  
-java -jar target/server-runnable.jar
+make -f makefileWindows server
 
 ### To run client:  
-java -jar target/client-runnable.jar
+make -f makefileWindows client
 
-### User input mode  
+## On linux:  
+make -f makefileUnix compile
+
+### To run server:  
+make -f makefileUnix server
+
+### To run client:  
+make -f makefileUnix client
+
+## User input mode  
 allow the client to send their own math requests three times  
-### Automatic mode  
+## Automatic mode  
 will generate three math requests to be sent to the server
 
 **Group Members:**  
