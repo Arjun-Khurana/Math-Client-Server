@@ -22,5 +22,9 @@ make -f makefileUnix client
 
 ## User input mode  
 allow the client to send their own math requests three times  
-## Automatic mode  
+## Automatic mode
 will generate three math requests to be sent to the server
+
+## Link to Github Repo 
+https://github.com/Arjun-Khurana/Math-Client-Server.git
+
