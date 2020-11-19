@@ -57,9 +57,9 @@ class client {
 
     // String ackResponse = new String(ack.getData());
     if (ackMessage.getType().equals("ack")) {
-      System.out.println("FROM SERVER:" + ackMessage.getMessage());
+      System.out.println("FROM SERVER: " + ackMessage.getMessage());
     }
- 
+
     receiveData = new byte[1024];
 
     int x = -1;
